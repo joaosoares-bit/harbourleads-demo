@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Harbour Leads · Yachts of quiet distinction</title>
+<meta name="description" content="Harbour Leads sells yachts the way a harbourmaster would: quietly, from four harbours, since 1958. Concept demo with fictional content.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A1730">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Harbour Leads · Yachts of quiet distinction">
+<meta property="og:description" content="Four harbours. One ledger. Since 1958.">
+<meta property="og:image" content="https://joaosoares-bit.github.io/harbourleads-demo/media/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://joaosoares-bit.github.io/harbourleads-demo/">
+<link rel="canonical" href="https://joaosoares-bit.github.io/harbourleads-demo/">
+<link rel="icon" href="media/img/markonly.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="media/img/poster-v.webp" media="(orientation: portrait)">
+<link rel="preload" as="image" href="media/img/poster-960.webp" media="(orientation: landscape)">
+<link rel="stylesheet" href="css/site.css">
+<script>
+  try { if (localStorage.getItem('hl-calm') === '1') document.documentElement.classList.add('calm'); } catch (e) {}
+  document.documentElement.classList.add('js');
+</script>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><span class="cursor-label"></span></div>
+
+<header class="top" data-top>
+  <a class="top-brand" href="#top" aria-label="Harbour Leads, back to the top">
+    <span class="top-logo top-logo-light">
+      <img class="top-mark" src="media/img/markonly-sm.webp" alt="" width="60" height="40">
+      <img class="top-word" src="media/img/wordmark-sm.webp" alt="Harbour Leads" width="150" height="29">
+    </span>
+    <span class="top-logo top-logo-navy" aria-hidden="true">
+      <img class="top-mark" src="media/img/markonly-navy-sm.webp" alt="" width="60" height="40">
+      <img class="top-word" src="media/img/wordmark-navy-sm.webp" alt="" width="150" height="29">
+    </span>
+  </a>
+  <nav class="top-nav" aria-label="Main">
+    <a href="#harbours">Harbours</a>
+    <a href="#story">Story</a>
+    <a href="#fleet">Fleet</a>
+    <a href="#hull">Bespoke</a>
+  </nav>
+  <a class="pill pill-gold" href="#enquire">Enquire</a>
+  <button class="pill menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn>
+    <span class="menu-lines" aria-hidden="true"><i></i><i></i></span><span>Menu</span>
+  </button>
+</header>
+
+<div class="menu" id="menu" hidden data-menu>
+  <div class="menu-bg" aria-hidden="true"></div>
+  <nav class="menu-list" aria-label="Menu">
+    <a href="#harbours"><span>01</span>Harbours</a>
+    <a href="#story"><span>02</span>Story</a>
+    <a href="#fleet"><span>03</span>Fleet</a>
+    <a href="#hull"><span>04</span>Bespoke</a>
+    <a href="#enquire"><span>05</span>Enquire</a>
+  </nav>
+  <p class="menu-foot">Cascais · Monaco · Palma · Porto Cervo</p>
+</div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" data-hero aria-label="Harbour Leads">
+    <div class="hero-frame" data-hero-frame>
+      <video class="hero-video" data-hero-video muted playsinline loop preload="auto"
+        poster="media/img/poster-1920.webp" aria-hidden="true"></video>
+      <script>
+        (function () {
+          var v = document.querySelector('[data-hero-video]');
+          var w = window.innerWidth, h = window.innerHeight, d = window.devicePixelRatio || 1, px = w * d;
+          var vertical = h > w * 1.1;
+          var src = vertical ? 'hero-v.mp4' : px >= 2600 ? 'hero-2160.mp4' : px >= 1500 ? 'hero-1080.mp4' : 'hero-720.mp4';
+          v.poster = 'media/img/' + (vertical ? 'poster-v.webp' : (px >= 1400 ? 'poster-1920.webp' : 'poster-960.webp'));
+          v.src = 'media/video/' + src;
+        })();
+      </script>
+      <div class="hero-shade" aria-hidden="true"></div>
+    </div>
+
+    <div class="hero-copy">
+      <h1 class="hero-title" data-split-lines>
+        <span class="line">Every yacht</span>
+        <span class="line"><em>has a harbour.</em></span>
+      </h1>
+      <div class="hero-actions">
+        <a class="pill pill-gold" href="#fleet">See the fleet</a>
+        <a class="pill pill-ghost" href="#story">Our story</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true"><span></span></div>
+
+    <!-- brand opening: the wake of light draws the mark -->
+    <div class="intro" data-intro aria-hidden="true">
+      <div class="intro-sea intro-sea-top"></div>
+      <div class="intro-sea intro-sea-bottom"></div>
+      <svg class="intro-wake" viewBox="0 0 1000 400" preserveAspectRatio="none">
+        <path data-wake d="M-20 300 C 180 330, 300 330, 420 250 S 700 130, 1020 120" />
+      </svg>
+      <div class="intro-logo" data-intro-logo>
+        <svg class="intro-draw" viewBox="0 0 1180 780" aria-hidden="true">
+          <path data-arc d="M455 372 A 296 296 0 0 1 810 150" />
+          <path data-arc d="M917 188 A 296 296 0 0 1 1040 404" />
+          <path data-arc d="M1036 452 A 296 296 0 0 1 976 596" />
+          <path data-swoosh d="M40 662 C 170 700, 260 640, 330 560 C 430 450, 700 420, 1000 408" />
+        </svg>
+        <img class="intro-mark" src="media/img/markonly.webp" alt="" width="1180" height="780">
+        <img class="intro-word" src="media/img/wordmark.webp" alt="" width="1530" height="300">
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto" data-bg="#F7F4EC" aria-label="Manifesto">
+    <p class="manifesto-text" data-fill>
+      We do not advertise yachts. We introduce them, one owner to the next, the way a harbourmaster
+      once did at the end of a pier in Cascais. Quietly, carefully, and only when the sea agrees.
+    </p>
+  </section>
+
+  <!-- HARBOURS: full-screen backgrounds that open like a porthole -->
+  <section class="harbours" id="harbours" data-harbours aria-label="Our four harbours">
+    <div class="harbours-stick">
+      <div class="harbour-bgs">
+        <figure class="harbour-bg is-on" data-hbg>
+          <img src="media/img/cascais-1800.webp" srcset="media/img/cascais-900.webp 900w, media/img/cascais-1800.webp 1800w, media/img/cascais-2600.webp 2600w" sizes="100vw" alt="Superyacht moored in the marina at sunset" loading="lazy" decoding="async">
+        </figure>
+        <figure class="harbour-bg" data-hbg>
+          <img src="media/img/monaco-1800.webp" srcset="media/img/monaco-900.webp 900w, media/img/monaco-1800.webp 1800w, media/img/monaco-2600.webp 2600w" sizes="100vw" alt="Dark-hulled superyacht cruising past the islands" loading="lazy" decoding="async">
+        </figure>
+        <figure class="harbour-bg" data-hbg>
+          <img src="media/img/palma-1800.webp" srcset="media/img/palma-900.webp 900w, media/img/palma-1800.webp 1800w, media/img/palma-2600.webp 2600w" sizes="100vw" alt="Yachts at anchor in a turquoise bay" loading="lazy" decoding="async">
+        </figure>
+        <figure class="harbour-bg" data-hbg>
+          <img src="media/img/cervo-1800.webp" srcset="media/img/cervo-900.webp 900w, media/img/cervo-1800.webp 1800w, media/img/cervo-2600.webp 2600w" sizes="100vw" alt="Yacht seen from above on deep green water" loading="lazy" decoding="async">
+        </figure>
+      </div>
+      <div class="harbour-ring" data-hring aria-hidden="true"></div>
+
+      <div class="harbour-ui">
+        <h2 class="harbour-kicker">Four harbours.<br><em>One ledger.</em></h2>
+        <ol class="harbour-names">
+          <li class="is-on" data-hname><span class="hn">Cascais</span><span class="hc">38°41′N · 9°25′W · since 1958</span></li>
+          <li data-hname><span class="hn">Monaco</span><span class="hc">43°44′N · 7°25′E · since 1974</span></li>
+          <li data-hname><span class="hn">Palma</span><span class="hc">39°34′N · 2°38′E · since 1991</span></li>
+          <li data-hname><span class="hn">Porto Cervo</span><span class="hc">41°08′N · 9°32′E · since 2008</span></li>
+        </ol>
+        <div class="harbour-count" aria-hidden="true"><span data-hnum>01</span> / 04</div>
+        <div class="harbour-bar" aria-hidden="true"><span data-hbar></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="story" id="story" data-bg="#F7F4EC" aria-labelledby="story-title">
+    <header class="story-head">
+      <h2 id="story-title" class="story-title" data-split-lines>
+        <span class="line">The ledger</span>
+        <span class="line"><em>at the end of the pier.</em></span>
+      </h2>
+      <p class="story-lede">In 1958, harbourmaster Afonso Varela kept a leather ledger in Cascais. Every captain who moored there was written in it. When one wanted to sell, Afonso never advertised. He opened the ledger.</p>
+    </header>
+
+    <ol class="chapters">
+      <li class="chapter" data-chapter>
+        <div class="chapter-year" aria-hidden="true">1958</div>
+        <figure class="chapter-media draw" data-draw>
+          <img src="media/img/wireframe-1800.webp" srcset="media/img/wireframe-900.webp 900w, media/img/wireframe-1800.webp 1800w" sizes="(max-width: 760px) 92vw, 52vw" alt="Line drawing of a motor yacht in profile" loading="lazy" decoding="async">
+        </figure>
+        <div class="chapter-copy">
+          <h3><span class="yr">1958</span> The Ledger</h3>
+          <p>A harbourmaster's notebook becomes a list of owners who trust one man's eye. The first yacht changes hands over a handshake on Pier 3.</p>
+        </div>
+      </li>
+      <li class="chapter" data-chapter>
+        <div class="chapter-year" aria-hidden="true">1974</div>
+        <figure class="chapter-media" data-reveal>
+          <img src="media/img/sidedeck-1800.webp" srcset="media/img/sidedeck-900.webp 900w, media/img/sidedeck-1800.webp 1800w" sizes="(max-width: 760px) 92vw, 40vw" alt="Guest in a white robe walking the side deck at sea" loading="lazy" decoding="async">
+        </figure>
+        <div class="chapter-copy">
+          <h3><span class="yr">1974</span> The Second Harbour</h3>
+          <p>His daughter, Inês Varela, opens an office in Monaco. She sails every yacht before she lists it, and turns down one in three.</p>
+        </div>
+      </li>
+      <li class="chapter" data-chapter>
+        <div class="chapter-year" aria-hidden="true">1999</div>
+        <figure class="chapter-media" data-reveal>
+          <img src="media/img/wake-1800.webp" srcset="media/img/wake-900.webp 900w, media/img/wake-1800.webp 1800w" sizes="(max-width: 760px) 92vw, 52vw" alt="White wake behind a yacht on dark open water" loading="lazy" decoding="async">
+        </figure>
+        <div class="chapter-copy">
+          <h3><span class="yr">1999</span> The Quiet List</h3>
+          <p>Harbour stops advertising altogether. Buyers are introduced, never marketed to. The waiting list passes four hundred names.</p>
+        </div>
+      </li>
+      <li class="chapter" data-chapter>
+        <div class="chapter-year" aria-hidden="true">Today</div>
+        <figure class="chapter-media" data-reveal>
+          <img src="media/img/deck-1800.webp" srcset="media/img/deck-900.webp 900w, media/img/deck-1800.webp 1800w" sizes="(max-width: 760px) 92vw, 40vw" alt="Shaded aft deck lounge with sofas and an open view of the sea" loading="lazy" decoding="async">
+        </figure>
+        <div class="chapter-copy">
+          <h3><span class="yr">Today</span> Harbour Leads</h3>
+          <p>The ledger is digital. The handshake is not. Four harbours, one rule: we only sell what we would sail ourselves.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- WINDOW: the sea seen through the name -->
+  <section class="window" data-window aria-label="Harbour">
+    <div class="window-stick">
+      <video class="window-video" data-lazy-video data-src="media/video/hero-720.mp4" data-src-big="media/video/hero-1080.mp4" muted playsinline loop preload="none" aria-hidden="true"></video>
+      <div class="window-mask" data-window-mask aria-hidden="true"><span>HARBOUR</span></div>
+      <p class="window-line" data-window-line>Sold quietly.<br><em>Delivered beautifully.</em></p>
+    </div>
+  </section>
+
+  <!-- FLEET -->
+  <section class="fleet" id="fleet" data-bg="#0A1730" aria-labelledby="fleet-title">
+    <div class="fleet-head">
+      <h2 id="fleet-title" data-split-lines>
+        <span class="line">In harbour</span>
+        <span class="line"><em>this season.</em></span>
+      </h2>
+      <div class="fleet-arrows">
+        <button class="arrow" type="button" data-fleet-prev aria-label="Previous yacht"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button class="arrow" type="button" data-fleet-next aria-label="Next yacht"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <div class="fleet-track" data-fleet-track>
+      <article class="yacht" data-tilt>
+        <a href="#enquire" class="yacht-link" data-cursor="View">
+          <figure class="yacht-media"><img src="media/img/silente-900.webp" srcset="media/img/silente-900.webp 900w, media/img/silente-1800.webp 1800w" sizes="(max-width: 760px) 78vw, 30vw" alt="Silente 55, a grey superyacht on open water" loading="lazy" decoding="async"></figure>
+          <h3>Silente 55</h3>
+          <p class="yacht-spec">55 m · 2019 · 12 guests</p>
+          <p class="yacht-price">€ 38.5M</p>
+        </a>
+      </article>
+      <article class="yacht" data-tilt>
+        <a href="#enquire" class="yacht-link" data-cursor="View">
+          <figure class="yacht-media"><img src="media/img/flybridge-900.webp" srcset="media/img/flybridge-900.webp 900w, media/img/flybridge-1800.webp 1800w" sizes="(max-width: 760px) 78vw, 30vw" alt="Navigatrix 78 at sunset with guests on the flybridge" loading="lazy" decoding="async"></figure>
+          <h3>Navigatrix 78</h3>
+          <p class="yacht-spec">24 m · 2026 · 8 guests</p>
+          <p class="yacht-price">€ 6.2M</p>
+        </a>
+      </article>
+      <article class="yacht" data-tilt>
+        <a href="#enquire" class="yacht-link" data-cursor="View">
+          <figure class="yacht-media"><img src="media/img/wakev-900.webp" srcset="media/img/wakev-900.webp 900w, media/img/wakev-1800.webp 1800w" sizes="(max-width: 760px) 78vw, 30vw" alt="Aria 30 cruising with a long white wake" loading="lazy" decoding="async"></figure>
+          <h3>Aria 30</h3>
+          <p class="yacht-spec">30 m · 2021 · 10 guests</p>
+          <p class="yacht-price">€ 9.8M</p>
+        </a>
+      </article>
+      <article class="yacht" data-tilt>
+        <a href="#enquire" class="yacht-link" data-cursor="View">
+          <figure class="yacht-media"><img src="media/img/diagonal-900.webp" srcset="media/img/diagonal-900.webp 900w, media/img/diagonal-1800.webp 1800w" sizes="(max-width: 760px) 78vw, 30vw" alt="Meridian 42 seen from above on deep water" loading="lazy" decoding="async"></figure>
+          <h3>Meridian 42</h3>
+          <p class="yacht-spec">42 m · 2017 · 12 guests</p>
+          <p class="yacht-price">€ 21M</p>
+        </a>
+      </article>
+      <article class="yacht" data-tilt>
+        <a href="#enquire" class="yacht-link" data-cursor="View">
+          <figure class="yacht-media"><img src="media/img/monaco-900.webp" srcset="media/img/monaco-900.webp 900w, media/img/monaco-1800.webp 1800w" sizes="(max-width: 760px) 78vw, 30vw" alt="Nerina 70, a dark-hulled superyacht under way" loading="lazy" decoding="async"></figure>
+          <h3>Nerina 70</h3>
+          <p class="yacht-spec">70 m · 2022 · 14 guests</p>
+          <p class="yacht-price">On request</p>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <!-- BESPOKE HULL: the whole screen changes colour with the hull -->
+  <section class="hull" id="hull" data-hull aria-labelledby="hull-title">
+    <div class="hull-copy">
+      <h2 id="hull-title" data-split-lines>
+        <span class="line">Your hull.</span>
+        <span class="line"><em>Your colour.</em></span>
+      </h2>
+      <div class="hull-swatches" role="radiogroup" aria-label="Hull colour">
+        <button type="button" role="radio" aria-checked="true" data-hull-pick="navy" style="--sw:#13294F"><span>Abyss Navy</span></button>
+        <button type="button" role="radio" aria-checked="false" data-hull-pick="white" style="--sw:#ECE8DF"><span>Pearl White</span></button>
+        <button type="button" role="radio" aria-checked="false" data-hull-pick="gunmetal" style="--sw:#4A4F57"><span>Gunmetal</span></button>
+        <button type="button" role="radio" aria-checked="false" data-hull-pick="sand" style="--sw:#C9B48C"><span>Riviera Sand</span></button>
+      </div>
+      <p class="hull-name" data-hull-name aria-live="polite">Abyss Navy</p>
+    </div>
+    <div class="hull-stage">
+      <img class="hull-img is-on" data-hull-img="navy" src="media/img/hull-navy-1800.webp" srcset="media/img/hull-navy-900.webp 900w, media/img/hull-navy-1800.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Harbour 78 with an abyss navy hull" loading="lazy" decoding="async">
+      <img class="hull-img" data-hull-img="white" src="media/img/hull-white-1800.webp" srcset="media/img/hull-white-900.webp 900w, media/img/hull-white-1800.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Harbour 78 with a pearl white hull" loading="lazy" decoding="async">
+      <img class="hull-img" data-hull-img="gunmetal" src="media/img/hull-gunmetal-1800.webp" srcset="media/img/hull-gunmetal-900.webp 900w, media/img/hull-gunmetal-1800.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Harbour 78 with a gunmetal hull" loading="lazy" decoding="async">
+      <img class="hull-img" data-hull-img="sand" src="media/img/hull-sand-1800.webp" srcset="media/img/hull-sand-900.webp 900w, media/img/hull-sand-1800.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Harbour 78 with a riviera sand hull" loading="lazy" decoding="async">
+    </div>
+  </section>
+
+  <!-- INSIDE -->
+  <section class="inside" data-bg="#F7F4EC" aria-labelledby="inside-title">
+    <h2 id="inside-title" class="inside-title" data-split-lines>
+      <span class="line">Step inside</span>
+      <span class="line"><em>before you sail.</em></span>
+    </h2>
+    <div class="inside-grid">
+      <figure class="inside-a" data-reveal data-parallax="-8"><img src="media/img/salon-1800.webp" srcset="media/img/salon-900.webp 900w, media/img/salon-1800.webp 1800w" sizes="(max-width: 760px) 92vw, 58vw" alt="Main salon with cream sofas and sea views" loading="lazy" decoding="async"></figure>
+      <figure class="inside-b" data-reveal data-parallax="10"><img src="media/img/materials-900.webp" srcset="media/img/materials-900.webp 900w, media/img/materials-1800.webp 1800w" sizes="(max-width: 760px) 70vw, 30vw" alt="Material samples: teak, quilted leather, lacquer and stone" loading="lazy" decoding="async"></figure>
+    </div>
+    <ul class="numbers">
+      <li><strong data-count="68">68</strong><span>years at sea</span></li>
+      <li><strong data-count="312">312</strong><span>yachts delivered</span></li>
+      <li><strong data-count="41">41</strong><span>owner nationalities</span></li>
+      <li><strong>1 in 3</strong><span>yachts declined</span></li>
+    </ul>
+  </section>
+
+  <!-- ENQUIRE -->
+  <section class="enquire" id="enquire" data-bg="#0A1730" aria-labelledby="enquire-title">
+    <div class="enquire-bg" aria-hidden="true">
+      <img src="media/img/cascais-1800.webp" srcset="media/img/cascais-900.webp 900w, media/img/cascais-1800.webp 1800w" sizes="100vw" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="enquire-inner">
+      <h2 id="enquire-title" data-split-lines>
+        <span class="line">Your name</span>
+        <span class="line"><em>in the ledger.</em></span>
+      </h2>
+      <form class="form" data-form>
+        <label><span>Name</span><input name="name" autocomplete="name" required></label>
+        <label><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
+        <label><span>I am looking to</span>
+          <select name="intent">
+            <option>Buy a yacht</option>
+            <option>Sell my yacht</option>
+            <option>Commission a new build</option>
+          </select>
+        </label>
+        <button class="pill pill-gold" type="submit">Request an introduction</button>
+        <p class="form-ok" data-form-ok hidden>Thank you. A broker from your nearest harbour will write within a day.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" data-bg="#0A1730">
+  <div class="foot-bar">
+    <a class="foot-ic" href="#enquire" aria-label="Write to us"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z M3 6l9 7 9-7"/></svg></a>
+    <a class="foot-ic" href="#enquire" aria-label="Call the Cascais office"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a>
+    <a class="foot-ic" href="#top" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+  </div>
+  <img class="foot-logo" src="media/img/logo-light.webp" alt="Harbour Leads" width="300" height="233" loading="lazy">
+  <p class="foot-ports">Cascais · Monaco · Palma · Porto Cervo</p>
+  <div class="foot-row">
+    <button class="calm-toggle" type="button" data-calm aria-pressed="false">Reduce motion</button>
+    <p class="foot-note">Concept demo. Company, story, yachts and prices are fictional. Video: Pexels.</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
