@@ -29,86 +29,10 @@
   $$('a', menu).forEach(a => a.addEventListener('click', () => setMenu(false)));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
 
-  // configurator: a photo sequence of a real configurator (turn, then four configured looks), no 3D model served
-  const cfg = $('[data-cfg]'), cv = $('[data-cfg-canvas]'), cx = cv.getContext('2d'), wipe = $('[data-cfg-wipe]'), still = $('[data-cfg-still]');
-  const LOOKS = [
-    { hull: 'White', shade: 'Open', ed: 'Standard' },
-    { hull: 'Ocean Blue', shade: 'Bimini', ed: 'Standard' },
-    { hull: 'Signal Grey', shade: 'T-top', ed: 'Pilot' },
-    { hull: 'Ocean Blue', shade: 'T-top', ed: 'Standard' }
-  ];
-  const N = 36, small = () => innerWidth <= 760;
-  const turnSrc = (e, k) => `media/cfg/${e}/turn-${String(k).padStart(2, '0')}.webp`;
-  const lookSrc = (e, k) => `media/cfg/${e}/look-${k + 1}${small() ? '-640' : ''}.webp`;
-  const sets = {};
-  let env = 'mar', cfgP = calm ? 1 : 0, lookNow = calm ? 3 : 0;
-  const load = (e) => {
-    if (sets[e]) return sets[e];
-    // decoded ahead of time (off the main thread), so turning the yacht never waits for a picture to decode
-    // one picture at a time, in the order the scroll needs them, so loading never stalls a frame
-    const queue = [];
-    const mk = (s) => { const im = new Image(); im.decoding = 'async'; im._src = s; queue.push(im); return im; };
-    const next = () => { const im = queue.shift(); if (!im) return; im.src = im._src;
-      im.decode().then(() => (window.createImageBitmap ? createImageBitmap(im) : im)).then((bm) => { im._bm = bm; if (e === env) cfgDraw(true); })
-        .catch(() => {}).finally(() => (window.requestIdleCallback ? requestIdleCallback(next, { timeout: 120 }) : setTimeout(next, 16))); };
-    const set = { turn: Array.from({ length: N }, (_, k) => mk(turnSrc(e, k))), looks: LOOKS.map((_, k) => mk(lookSrc(e, k))) };
-    next(); next();
-    return (sets[e] = set);
-  };
-  const fit = () => { const d = Math.min(2, devicePixelRatio || 1); cv.width = Math.round(cv.clientWidth * d); cv.height = Math.round(cv.clientHeight * d); };
-  const paint = (im) => {
-    if (!im || !im._bm) return false;
-    const src = im._bm, W = cv.width, H = cv.height, iw = im.naturalWidth, ih = im.naturalHeight;
-    const s = small() ? (W / iw) * 1.12 : Math.max(W / iw, H / ih);
-    const w = iw * s, h = ih * s;
-    cx.clearRect(0, 0, W, H);
-    cx.drawImage(src, (W - w) / 2, small() ? H * .41 - h * .45 : (H - h) / 2, w, h);
-    return true;
-  };
-  const chips = (L) => {
-    $$('.cfg-row i', cfg).forEach(i => { const [k, v] = i.dataset.o.split(':'); i.classList.toggle('on', ({ hull: L.hull, shade: L.shade, ed: L.ed })[k] === v); });
-  };
-  let lastKey = '';
-  function cfgDraw(force) {
-    const set = load(env), p = cfgP;
-    const key = env + (p < .5 ? 't' + Math.round((p / .5) * N) % N : 'l' + Math.min(399, Math.floor(((p - .5) / .5) * 400)));
-    if (key === lastKey && !force) return; lastKey = key;
-    if (p < .5) {
-      const k = Math.round((p / .5) * N) % N;
-      paint(set.turn[k]) || paint(set.turn[0]);
-      wipe.style.clipPath = 'circle(0% at 78% 80%)';
-      $('[data-cfg-deg]').textContent = `${Math.round((p / .5) * 360)}°`;
-      lookNow = 0;
-    } else {
-      const q = Math.min(.9999, (p - .5) / .5), li = Math.floor(q * 4), local = q * 4 - li, r = Math.min(1, local / .4);
-      paint(li ? set.looks[li - 1] : set.turn[0]);
-      wipe.style.backgroundImage = `url("${lookSrc(env, li)}")`;
-      wipe.style.clipPath = `circle(${(r * 150).toFixed(1)}% at ${small() ? '50% 86%' : '78% 80%'})`;
-      $('[data-cfg-deg]').textContent = '360°';
-      lookNow = r >= 1 ? li : Math.max(0, li - 1);
-    }
-    const L = LOOKS[lookNow];
-    chips(L);
-    $('[data-cfg-lead]').classList.toggle('on', p > .93);
-    $('[data-cfg-lead-text]').textContent = `Quote request · ${L.hull} · ${L.shade}`;
-  }
-  $$('[data-cfg-env]').forEach(b => b.addEventListener('click', () => {
-    env = b.dataset.cfgEnv;
-    $$('[data-cfg-env]').forEach(x => { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', String(x === b)); });
-    cfg.classList.toggle('is-studio', env === 'estudio');
-    still.srcset = `media/cfg/${env}/look-4-640.webp 640w, media/cfg/${env}/look-4.webp 1140w`; still.src = `media/cfg/${env}/look-4-640.webp`;
-    load(env); cfgDraw(true); tone();
-  }));
-  if (calm || !hasGsap) { chips(LOOKS[3]); $('[data-cfg-lead-text]').textContent = 'Quote request · Ocean Blue · T-top'; }
-  else {
-    new IntersectionObserver((en, ob) => { if (en[0].isIntersecting) { fit(); load(env); cfgDraw(true); ob.disconnect(); } }, { rootMargin: '150% 0px' }).observe(cfg);
-    addEventListener('resize', () => { fit(); cfgDraw(true); });
-  }
-
   // header turns navy over light sections
   const top = $('[data-top]');
   const sections = $$('main > section, .foot');
-  const isLight = s => s.classList.contains('manifesto') || s.classList.contains('path') || (s === cfg && cfg.classList.contains('is-studio'));
+  const isLight = s => s.classList.contains('manifesto') || s.classList.contains('path');
   const tone = () => {
     const y = 36;
     const s = sections.find(el => { const r = el.getBoundingClientRect(); return r.top <= y && r.bottom > y; });
@@ -126,7 +50,7 @@
     $('[data-field-utm]').value = utm;
   } catch (e) {}
   $$('[data-cta]').forEach(a => a.addEventListener('click', () => {
-    const about = a.hasAttribute('data-about-cfg') ? `Configurator · ${LOOKS[lookNow].hull} · ${LOOKS[lookNow].shade}` : (a.dataset.about || '');
+    const about = a.dataset.about || '';
     $('[data-field-cta]').value = a.dataset.cta;
     $('[data-field-about]').value = about;
     const note = $('[data-form-about]');
@@ -299,8 +223,10 @@
     .fromTo('[data-window-line]', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .35 }, 1.0)
     .to({}, { duration: .3 });
 
-  // configurator: the scroll turns the yacht a full circle, then wipes through four configured looks
-  ScrollTrigger.create({ trigger: cfg, start: 'top top', end: 'bottom bottom', scrub: true, onUpdate: s => { cfgP = s.progress; cfgDraw(); } });
+  // configurator: the configured yacht rises into place and the new lead pops up
+  gsap.timeline({ scrollTrigger: { trigger: '.stage-cfg', start: 'top 90%', end: 'center 50%', scrub: .6 } })
+    .fromTo('.screen-cfg', { y: 120, scale: .92 }, { y: 0, scale: 1, ease: 'none' }, 0)
+    .fromTo('.cfg-chip', { y: 60, autoAlpha: 0 }, { y: 0, autoAlpha: 1, ease: 'none' }, .55);
 
   // products: each background drifts behind its section
   $$('[data-product]').forEach(s => gsap.fromTo($('.product-bg', s), { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: s, start: 'top bottom', end: 'bottom top', scrub: true } }));

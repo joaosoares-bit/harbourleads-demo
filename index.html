@@ -169,34 +169,23 @@
     </div>
   </section>
 
-  <!-- 02 CONFIGURATOR: a photo sequence of a real configurator we built (no 3D model on this page) -->
-  <section class="cfg" id="configurator" data-cfg aria-labelledby="cfg-title">
-    <div class="cfg-stick">
-      <div class="cfg-stage" aria-hidden="true">
-        <img class="cfg-still" data-cfg-still src="media/cfg/mar/look-4-640.webp" srcset="media/cfg/mar/look-4-640.webp 640w, media/cfg/mar/look-4.webp 1140w" sizes="(max-width: 760px) 320px, 100vw" alt="" loading="lazy" decoding="async">
-        <canvas class="cfg-canvas" data-cfg-canvas></canvas>
-        <div class="cfg-wipe" data-cfg-wipe></div>
+  <!-- 02 CONFIGURATOR: photos of a real configurator we built (no 3D model on this page) -->
+  <section class="product product-cfg" id="configurator" data-product aria-labelledby="cfg-title">
+    <div class="product-bg" aria-hidden="true">
+      <img src="media/cfg/mar/look-4.webp" srcset="media/cfg/mar/look-4-640.webp 640w, media/cfg/mar/look-4.webp 1140w" sizes="100vw" alt="" loading="lazy" decoding="async">
+    </div>
+    <div class="product-inner">
+      <div class="product-copy">
+        <h2 id="cfg-title" data-split-lines>
+          <span class="line">They build it.</span>
+          <span class="line"><em>They buy it.</em></span>
+        </h2>
+        <p>Your buyer picks the hull, the shade and the finish on your website, then asks for a quote. You get the lead with the exact yacht they want. No brochure ever did that.</p>
+        <a class="pill pill-gold" href="#start" data-cta="configurator" data-interest="3D configurator">Send us your model</a>
       </div>
-      <div class="cfg-ui">
-        <div class="cfg-copy">
-          <h2 id="cfg-title" data-split-lines>
-            <span class="line">Let them build it.</span>
-            <span class="line"><em>They buy it.</em></span>
-          </h2>
-          <p>Your buyer picks the hull, the shade and the finish on your website, then asks for a quote. You get the lead with the exact yacht they want. No brochure ever did that.</p>
-          <a class="pill pill-gold" href="#start" data-cta="configurator" data-interest="3D configurator" data-about-cfg>Send us your model</a>
-        </div>
-        <div class="cfg-env" role="group" aria-label="Scene">
-          <button type="button" class="is-on" data-cfg-env="mar" aria-pressed="true">At sea</button>
-          <button type="button" data-cfg-env="estudio" aria-pressed="false">Studio</button>
-        </div>
-        <div class="cfg-panel" aria-hidden="true">
-          <p class="cfg-turn"><b data-cfg-deg>0°</b> Every angle, every option</p>
-          <div class="cfg-row"><span>Hull</span><i data-o="hull:White">White</i><i data-o="hull:Ocean Blue">Ocean Blue</i><i data-o="hull:Signal Grey">Signal Grey</i></div>
-          <div class="cfg-row"><span>Shade</span><i data-o="shade:Open">Open</i><i data-o="shade:Bimini">Bimini</i><i data-o="shade:T-top">T-top</i></div>
-          <div class="cfg-row"><span>Edition</span><i data-o="ed:Standard">Standard</i><i data-o="ed:Pilot">Pilot</i></div>
-          <p class="cfg-lead" data-cfg-lead><b>New lead</b> <span data-cfg-lead-text>Quote request · Ocean Blue · T-top</span> <em>→ CRM</em></p>
-        </div>
+      <div class="product-stage stage-cfg" data-stage>
+        <figure class="screen screen-cfg"><img src="media/cfg/estudio/look-4.webp" srcset="media/cfg/estudio/look-4-640.webp 640w, media/cfg/estudio/look-4.webp 1140w" sizes="(max-width: 760px) 92vw, 52vw" alt="A yacht configured with an ocean blue hull and a stainless T-top" width="1140" height="1000" loading="lazy" decoding="async"></figure>
+        <p class="crm-chip cfg-chip" aria-hidden="true"><b>New lead</b> Ocean Blue · T-top <i>CRM</i></p>
       </div>
     </div>
   </section>
