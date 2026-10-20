@@ -1,4 +1,3 @@
-# Harbour Leads · demo pública
+# Harbour Leads
 
-Página de demonstração. Empresa, história, iates e preços são inventados. Não está indexada (`noindex`).
-O código-fonte vive num repositório privado.
+O site público da Harbour Leads · Yacht Sales Systems (fonte privada em joaosoares-bit/harbourleads-site).
