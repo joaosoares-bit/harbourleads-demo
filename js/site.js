@@ -80,11 +80,40 @@
   addEventListener('scroll', tone, { passive: true });
   tone();
 
-  // form
-  $('[data-form]').addEventListener('submit', e => {
+  // CTAs: every click is measured and tells the form what the visitor was looking at
+  const form = $('[data-form]');
+  const send = (event, data) => { (window.dataLayer = window.dataLayer || []).push({ event, ...data }); };
+  try {
+    const q = new URLSearchParams(location.search);
+    const utm = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'].map(k => q.get(k) && `${k}=${q.get(k)}`).filter(Boolean).join('&');
+    $('[data-field-utm]').value = utm;
+  } catch (e) {}
+  $$('[data-cta]').forEach(a => a.addEventListener('click', () => {
+    const about = a.hasAttribute('data-about-hull') ? `Hull in ${$('[data-hull-name]').textContent}` : (a.dataset.about || '');
+    $('[data-field-cta]').value = a.dataset.cta;
+    $('[data-field-about]').value = about;
+    const note = $('[data-form-about]');
+    note.textContent = about ? `About: ${about}` : '';
+    note.hidden = !about;
+    if (a.dataset.intent) form.intent.value = a.dataset.intent;
+    send('cta_click', { cta: a.dataset.cta, about });
+  }));
+
+  // phone: a gold dock to the form, out of the way whenever a section's own CTA is on screen, and on the form
+  const dock = $('[data-dock]');
+  const dockSeen = new Set();
+  const dio = new IntersectionObserver(entries => {
+    entries.forEach(en => (en.isIntersecting ? dockSeen.add(en.target) : dockSeen.delete(en.target)));
+    dock.classList.toggle('is-on', dockSeen.size === 0);
+  });
+  [$('[data-hero]'), $('[data-harbours]'), $('#enquire'), $('.foot'), ...$$('main .pill[data-cta], main .link-cta')].forEach(el => dio.observe(el));
+
+  // form (concept demo: shows the thank-you; the CRM endpoint goes here)
+  form.addEventListener('submit', e => {
     e.preventDefault();
     $('[data-form-ok]').hidden = false;
-    e.target.querySelector('button').disabled = true;
+    e.target.querySelector('button[type=submit]').disabled = true;
+    send('lead_submit', { cta: $('[data-field-cta]').value || 'direct', intent: form.intent.value });
   });
 
   // hero video: start on first gesture or 1.2 s after load, pause when away

@@ -15,7 +15,17 @@
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://joaosoares-bit.github.io/harbourleads-demo/">
 <link rel="canonical" href="https://joaosoares-bit.github.io/harbourleads-demo/">
-<link rel="icon" href="media/img/markonly.webp">
+<meta property="og:site_name" content="Harbour Leads">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" href="media/img/icon-96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="media/img/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+  {"@type":"WebSite","name":"Harbour Leads","url":"https://joaosoares-bit.github.io/harbourleads-demo/"},
+  {"@type":"Organization","name":"Harbour Leads","url":"https://joaosoares-bit.github.io/harbourleads-demo/","logo":"https://joaosoares-bit.github.io/harbourleads-demo/media/img/icon-512.png"}
+]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -49,7 +59,7 @@
     <a href="#fleet">Fleet</a>
     <a href="#hull">Bespoke</a>
   </nav>
-  <a class="pill pill-gold" href="#enquire">Enquire</a>
+  <a class="pill pill-gold" href="#enquire" data-cta="header">Enquire</a>
   <button class="pill menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn>
     <span class="menu-lines" aria-hidden="true"><i></i><i></i></span><span>Menu</span>
   </button>
@@ -62,7 +72,7 @@
     <a href="#story"><span>02</span>Story</a>
     <a href="#fleet"><span>03</span>Fleet</a>
     <a href="#hull"><span>04</span>Bespoke</a>
-    <a href="#enquire"><span>05</span>Enquire</a>
+    <a href="#enquire" data-cta="menu"><span>05</span>Enquire</a>
   </nav>
   <p class="menu-foot">Cascais · Monaco · Palma · Porto Cervo</p>
 </div>
@@ -73,7 +83,7 @@
   <section class="hero" data-hero aria-label="Harbour Leads">
     <div class="hero-frame" data-hero-frame>
       <video class="hero-video" data-hero-video muted playsinline loop preload="auto"
-        poster="media/img/poster-1920.webp" aria-hidden="true"></video>
+        aria-hidden="true"></video>
       <script>
         (function () {
           var v = document.querySelector('[data-hero-video]');
@@ -93,8 +103,8 @@
         <span class="line"><em>has a harbour.</em></span>
       </h1>
       <div class="hero-actions">
-        <a class="pill pill-gold" href="#fleet">See the fleet</a>
-        <a class="pill pill-ghost" href="#story">Our story</a>
+        <a class="pill pill-gold" href="#enquire" data-cta="hero">Request an introduction</a>
+        <a class="pill pill-ghost" href="#fleet">See the fleet</a>
       </div>
     </div>
 
@@ -114,7 +124,7 @@
           <path data-arc d="M1036 452 A 296 296 0 0 1 976 596" />
           <path data-swoosh d="M40 662 C 170 700, 260 640, 330 560 C 430 450, 700 420, 1000 408" />
         </svg>
-        <img class="intro-mark" src="media/img/markonly.webp" alt="" width="1180" height="780">
+        <img class="intro-mark" src="media/img/markonly-640.webp" srcset="media/img/markonly-640.webp 640w, media/img/markonly.webp 1180w" sizes="(max-width: 760px) 74vw, min(54vw, 520px)" alt="" width="1180" height="780">
         <img class="intro-word" src="media/img/wordmark.webp" alt="" width="1530" height="300">
       </div>
     </div>
@@ -126,6 +136,7 @@
       We do not advertise yachts. We introduce them, one owner to the next, the way a harbourmaster
       once did at the end of a pier in Cascais. Quietly, carefully, and only when the sea agrees.
     </p>
+    <a class="link-cta" href="#enquire" data-cta="manifesto">Ask for an introduction <span aria-hidden="true">→</span></a>
   </section>
 
   <!-- HARBOURS: full-screen backgrounds that open like a porthole -->
@@ -155,8 +166,13 @@
           <li data-hname><span class="hn">Palma</span><span class="hc">39°34′N · 2°38′E · since 1991</span></li>
           <li data-hname><span class="hn">Porto Cervo</span><span class="hc">41°08′N · 9°32′E · since 2008</span></li>
         </ol>
-        <div class="harbour-count" aria-hidden="true"><span data-hnum>01</span> / 04</div>
-        <div class="harbour-bar" aria-hidden="true"><span data-hbar></span></div>
+        <div class="harbour-foot">
+          <div>
+            <div class="harbour-count" aria-hidden="true"><span data-hnum>01</span> / 04</div>
+            <div class="harbour-bar" aria-hidden="true"><span data-hbar></span></div>
+          </div>
+          <a class="pill pill-ghost" href="#enquire" data-cta="harbours">Speak to a harbour</a>
+        </div>
       </div>
     </div>
   </section>
@@ -213,6 +229,10 @@
         </div>
       </li>
     </ol>
+    <div class="story-cta">
+      <p>Every owner since 1958 is in the ledger. <em>Yours could be next.</em></p>
+      <a class="pill pill-gold" href="#enquire" data-cta="story">Request an introduction</a>
+    </div>
   </section>
 
   <!-- WINDOW: the sea seen through the name -->
@@ -238,7 +258,7 @@
     </div>
     <div class="fleet-track" data-fleet-track>
       <article class="yacht" data-tilt>
-        <a href="#enquire" class="yacht-link" data-cursor="View">
+        <a href="#enquire" class="yacht-link" data-cursor="Enquire" data-cta="fleet" data-intent="Buy a yacht" data-about="Silente 55">
           <figure class="yacht-media"><img src="media/img/silente-900.webp" srcset="media/img/silente-900.webp 900w, media/img/silente-1800.webp 1800w" sizes="(max-width: 760px) 78vw, 30vw" alt="Silente 55, a grey superyacht on open water" loading="lazy" decoding="async"></figure>
           <h3>Silente 55</h3>
           <p class="yacht-spec">55 m · 2019 · 12 guests</p>
@@ -246,7 +266,7 @@
         </a>
       </article>
       <article class="yacht" data-tilt>
-        <a href="#enquire" class="yacht-link" data-cursor="View">
+        <a href="#enquire" class="yacht-link" data-cursor="Enquire" data-cta="fleet" data-intent="Buy a yacht" data-about="Navigatrix 78">
           <figure class="yacht-media"><img src="media/img/flybridge-900.webp" srcset="media/img/flybridge-900.webp 900w, media/img/flybridge-1800.webp 1800w" sizes="(max-width: 760px) 78vw, 30vw" alt="Navigatrix 78 at sunset with guests on the flybridge" loading="lazy" decoding="async"></figure>
           <h3>Navigatrix 78</h3>
           <p class="yacht-spec">24 m · 2026 · 8 guests</p>
@@ -254,7 +274,7 @@
         </a>
       </article>
       <article class="yacht" data-tilt>
-        <a href="#enquire" class="yacht-link" data-cursor="View">
+        <a href="#enquire" class="yacht-link" data-cursor="Enquire" data-cta="fleet" data-intent="Buy a yacht" data-about="Aria 30">
           <figure class="yacht-media"><img src="media/img/wakev-900.webp" srcset="media/img/wakev-900.webp 900w, media/img/wakev-1800.webp 1800w" sizes="(max-width: 760px) 78vw, 30vw" alt="Aria 30 cruising with a long white wake" loading="lazy" decoding="async"></figure>
           <h3>Aria 30</h3>
           <p class="yacht-spec">30 m · 2021 · 10 guests</p>
@@ -262,7 +282,7 @@
         </a>
       </article>
       <article class="yacht" data-tilt>
-        <a href="#enquire" class="yacht-link" data-cursor="View">
+        <a href="#enquire" class="yacht-link" data-cursor="Enquire" data-cta="fleet" data-intent="Buy a yacht" data-about="Meridian 42">
           <figure class="yacht-media"><img src="media/img/diagonal-900.webp" srcset="media/img/diagonal-900.webp 900w, media/img/diagonal-1800.webp 1800w" sizes="(max-width: 760px) 78vw, 30vw" alt="Meridian 42 seen from above on deep water" loading="lazy" decoding="async"></figure>
           <h3>Meridian 42</h3>
           <p class="yacht-spec">42 m · 2017 · 12 guests</p>
@@ -270,7 +290,7 @@
         </a>
       </article>
       <article class="yacht" data-tilt>
-        <a href="#enquire" class="yacht-link" data-cursor="View">
+        <a href="#enquire" class="yacht-link" data-cursor="Enquire" data-cta="fleet" data-intent="Buy a yacht" data-about="Nerina 70">
           <figure class="yacht-media"><img src="media/img/monaco-900.webp" srcset="media/img/monaco-900.webp 900w, media/img/monaco-1800.webp 1800w" sizes="(max-width: 760px) 78vw, 30vw" alt="Nerina 70, a dark-hulled superyacht under way" loading="lazy" decoding="async"></figure>
           <h3>Nerina 70</h3>
           <p class="yacht-spec">70 m · 2022 · 14 guests</p>
@@ -294,6 +314,7 @@
         <button type="button" role="radio" aria-checked="false" data-hull-pick="sand" style="--sw:#C9B48C"><span>Riviera Sand</span></button>
       </div>
       <p class="hull-name" data-hull-name aria-live="polite">Abyss Navy</p>
+      <a class="pill pill-gold hull-cta" href="#enquire" data-cta="hull" data-intent="Commission a new build" data-about-hull>Commission this hull</a>
     </div>
     <div class="hull-stage">
       <img class="hull-img is-on" data-hull-img="navy" src="media/img/hull-navy-1800.webp" srcset="media/img/hull-navy-900.webp 900w, media/img/hull-navy-1800.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Harbour 78 with an abyss navy hull" loading="lazy" decoding="async">
@@ -319,6 +340,9 @@
       <li><strong data-count="41">41</strong><span>owner nationalities</span></li>
       <li><strong>1 in 3</strong><span>yachts declined</span></li>
     </ul>
+    <div class="inside-cta">
+      <a class="pill pill-gold" href="#enquire" data-cta="inside" data-intent="Buy a yacht">Arrange a private viewing</a>
+    </div>
   </section>
 
   <!-- ENQUIRE -->
@@ -332,6 +356,10 @@
         <span class="line"><em>in the ledger.</em></span>
       </h2>
       <form class="form" data-form>
+        <p class="form-about" data-form-about hidden></p>
+        <input type="hidden" name="about" data-field-about>
+        <input type="hidden" name="cta" data-field-cta>
+        <input type="hidden" name="utm" data-field-utm>
         <label><span>Name</span><input name="name" autocomplete="name" required></label>
         <label><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
         <label><span>I am looking to</span>
@@ -348,11 +376,12 @@
   </section>
 </main>
 
+<a class="dock pill pill-gold" href="#enquire" data-cta="dock" data-dock>Request an introduction</a>
+
 <footer class="foot" data-bg="#0A1730">
   <div class="foot-bar">
-    <a class="foot-ic" href="#enquire" aria-label="Write to us"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z M3 6l9 7 9-7"/></svg></a>
-    <a class="foot-ic" href="#enquire" aria-label="Call the Cascais office"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></a>
-    <a class="foot-ic" href="#top" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+    <a class="foot-ic" href="#enquire" aria-label="Request an introduction" data-cta="footer"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3z M3 6l9 7 9-7"/></svg></a>
+    <a class="foot-ic" href="#top" aria-label="Back to the top"><svg viewBox="0 0 24 24"><path d="M12 19V5 M6 11l6-6 6 6"/></svg></a>
   </div>
   <img class="foot-logo" src="media/img/logo-light.webp" alt="Harbour Leads" width="300" height="233" loading="lazy">
   <p class="foot-ports">Cascais · Monaco · Palma · Porto Cervo</p>
