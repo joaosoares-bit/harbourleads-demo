@@ -227,7 +227,8 @@
   const arcs = $$('[data-arc]'); arcs.forEach(dash);
   const swoosh = $('[data-swoosh]'); dash(swoosh);
   const mark = $('.intro-mark'), word = $('.intro-word');
-  gsap.set(mark, { clipPath: 'inset(0 100% 0 0)', filter: 'blur(10px)' });
+  // visible from the first paint (it is the LCP): it only comes into focus, never hides behind a clip
+  gsap.set(mark, { filter: 'blur(16px)', scale: 1.06 });
   gsap.set(word, { clipPath: 'inset(0 50% 0 50%)', letterSpacing: '0' });
   lenis && lenis.stop();
 
@@ -235,7 +236,7 @@
   tl.to(wake, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' })
     .to(swoosh, { strokeDashoffset: 0, duration: .9 }, .45)
     .to(arcs, { strokeDashoffset: 0, duration: .9, stagger: .08 }, .6)
-    .to(mark, { clipPath: 'inset(0 0% 0 0)', filter: 'blur(0px)', duration: 1.1, ease: 'expo.out' }, 1.15)
+    .to(mark, { filter: 'blur(0px)', scale: 1, duration: 1.6, ease: 'expo.out' }, .3)
     .to([swoosh, ...arcs], { opacity: 0, duration: .6 }, 1.6)
     .to(word, { clipPath: 'inset(0 0% 0 0%)', duration: 1, ease: 'expo.out' }, 1.5)
     .to(wake, { opacity: 0, duration: .5 }, 2.1)
