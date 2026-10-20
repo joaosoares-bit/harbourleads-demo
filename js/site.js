@@ -20,11 +20,10 @@
 
   // full-screen menu
   const menu = $('[data-menu]'), menuBtn = $('[data-menu-btn]');
-  let lenis = null;
   const setMenu = (open) => {
     menuBtn.setAttribute('aria-expanded', String(open));
-    if (open) { menu.hidden = false; requestAnimationFrame(() => menu.classList.add('is-open')); lenis && lenis.stop(); }
-    else { menu.classList.remove('is-open'); lenis && lenis.start(); setTimeout(() => { if (!menu.classList.contains('is-open')) menu.hidden = true; }, 900); }
+    if (open) { menu.hidden = false; requestAnimationFrame(() => menu.classList.add('is-open')); root.classList.add('locked'); }
+    else { menu.classList.remove('is-open'); root.classList.remove('locked'); setTimeout(() => { if (!menu.classList.contains('is-open')) menu.hidden = true; }, 900); }
   };
   menuBtn.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
   $$('a', menu).forEach(a => a.addEventListener('click', () => setMenu(false)));
@@ -45,24 +44,35 @@
   let env = 'mar', cfgP = calm ? 1 : 0, lookNow = calm ? 3 : 0;
   const load = (e) => {
     if (sets[e]) return sets[e];
-    const mk = (s) => { const im = new Image(); im.decoding = 'async'; im.onload = () => e === env && cfgDraw(); im.src = s; return im; };
-    return (sets[e] = { turn: Array.from({ length: N }, (_, k) => mk(turnSrc(e, k))), looks: LOOKS.map((_, k) => mk(lookSrc(e, k))) });
+    // decoded ahead of time (off the main thread), so turning the yacht never waits for a picture to decode
+    // one picture at a time, in the order the scroll needs them, so loading never stalls a frame
+    const queue = [];
+    const mk = (s) => { const im = new Image(); im.decoding = 'async'; im._src = s; queue.push(im); return im; };
+    const next = () => { const im = queue.shift(); if (!im) return; im.src = im._src;
+      im.decode().then(() => (window.createImageBitmap ? createImageBitmap(im) : im)).then((bm) => { im._bm = bm; if (e === env) cfgDraw(true); })
+        .catch(() => {}).finally(() => (window.requestIdleCallback ? requestIdleCallback(next, { timeout: 120 }) : setTimeout(next, 16))); };
+    const set = { turn: Array.from({ length: N }, (_, k) => mk(turnSrc(e, k))), looks: LOOKS.map((_, k) => mk(lookSrc(e, k))) };
+    next(); next();
+    return (sets[e] = set);
   };
   const fit = () => { const d = Math.min(2, devicePixelRatio || 1); cv.width = Math.round(cv.clientWidth * d); cv.height = Math.round(cv.clientHeight * d); };
   const paint = (im) => {
-    if (!im || !im.complete || !im.naturalWidth) return false;
-    const W = cv.width, H = cv.height, iw = im.naturalWidth, ih = im.naturalHeight;
+    if (!im || !im._bm) return false;
+    const src = im._bm, W = cv.width, H = cv.height, iw = im.naturalWidth, ih = im.naturalHeight;
     const s = small() ? (W / iw) * 1.12 : Math.max(W / iw, H / ih);
     const w = iw * s, h = ih * s;
     cx.clearRect(0, 0, W, H);
-    cx.drawImage(im, (W - w) / 2, small() ? H * .41 - h * .45 : (H - h) / 2, w, h);
+    cx.drawImage(src, (W - w) / 2, small() ? H * .41 - h * .45 : (H - h) / 2, w, h);
     return true;
   };
   const chips = (L) => {
     $$('.cfg-row i', cfg).forEach(i => { const [k, v] = i.dataset.o.split(':'); i.classList.toggle('on', ({ hull: L.hull, shade: L.shade, ed: L.ed })[k] === v); });
   };
-  function cfgDraw() {
+  let lastKey = '';
+  function cfgDraw(force) {
     const set = load(env), p = cfgP;
+    const key = env + (p < .5 ? 't' + Math.round((p / .5) * N) % N : 'l' + Math.min(399, Math.floor(((p - .5) / .5) * 400)));
+    if (key === lastKey && !force) return; lastKey = key;
     if (p < .5) {
       const k = Math.round((p / .5) * N) % N;
       paint(set.turn[k]) || paint(set.turn[0]);
@@ -87,12 +97,12 @@
     $$('[data-cfg-env]').forEach(x => { x.classList.toggle('is-on', x === b); x.setAttribute('aria-pressed', String(x === b)); });
     cfg.classList.toggle('is-studio', env === 'estudio');
     still.srcset = `media/cfg/${env}/look-4-640.webp 640w, media/cfg/${env}/look-4.webp 1140w`; still.src = `media/cfg/${env}/look-4-640.webp`;
-    load(env); cfgDraw(); tone();
+    load(env); cfgDraw(true); tone();
   }));
   if (calm || !hasGsap) { chips(LOOKS[3]); $('[data-cfg-lead-text]').textContent = 'Quote request · Ocean Blue · T-top'; }
   else {
-    new IntersectionObserver((en, ob) => { if (en[0].isIntersecting) { fit(); load(env); cfgDraw(); ob.disconnect(); } }, { rootMargin: '150% 0px' }).observe(cfg);
-    addEventListener('resize', () => { fit(); cfgDraw(); });
+    new IntersectionObserver((en, ob) => { if (en[0].isIntersecting) { fit(); load(env); cfgDraw(true); ob.disconnect(); } }, { rootMargin: '150% 0px' }).observe(cfg);
+    addEventListener('resize', () => { fit(); cfgDraw(true); });
   }
 
   // header turns navy over light sections
@@ -181,20 +191,14 @@
   history.scrollRestoration = 'manual';
   scrollTo(0, 0);
 
-  if (typeof window.Lenis !== 'undefined') {
-    lenis = new Lenis({ duration: 1.15, smoothWheel: true });
-    window.__lenis = lenis;
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(t => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
-    $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
-      const id = a.getAttribute('href');
-      const el = id === '#top' ? 0 : $(id);
-      if (el === null) return;
-      e.preventDefault();
-      lenis.scrollTo(el, { offset: 0, duration: 1.6 });
-    }));
-  }
+  // native scroll, as Apple does: the page follows the finger and the wheel 1:1; anchors glide natively
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    const el = id === '#top' ? null : $(id);
+    if (id !== '#top' && !el) return;
+    e.preventDefault();
+    scrollTo({ top: el ? el.getBoundingClientRect().top + scrollY : 0, behavior: 'smooth' });
+  }));
 
   // custom cursor
   const cursor = $('.cursor');
@@ -209,12 +213,13 @@
   }
 
   // split-line entrance: each line rises and sharpens, the next follows 0.16 s later
-  const lineIn = (el, delay = 0) => gsap.fromTo($$('.line', el),
-    { yPercent: 70, filter: 'blur(14px)' },
-    { yPercent: 0, filter: 'blur(0px)', duration: 1.3, ease: 'expo.out', stagger: .16, delay });
+  $$('[data-split-lines] .line').forEach(l => { l.innerHTML = `<span class="li">${l.innerHTML}</span>`; });
+  const lineIn = (el, delay = 0) => gsap.fromTo($$('.li', el),
+    { yPercent: 105 },
+    { yPercent: 0, duration: 1.2, ease: 'expo.out', stagger: .12, delay });
   $$('[data-split-lines]').forEach(el => {
     if (el.classList.contains('hero-title')) return;
-    gsap.set($$('.line', el), { yPercent: 70, filter: 'blur(14px)' });
+    gsap.set($$('.li', el), { yPercent: 105 });
     ScrollTrigger.create({ trigger: el, start: 'top 85%', once: true, onEnter: () => lineIn(el) });
   });
 
@@ -222,7 +227,7 @@
   const intro = $('[data-intro]'), logo = $('[data-intro-logo]'), brand = $('.top-brand');
   const heroTitleLines = $$('.hero-title .line');
   const heroActions = $('.hero-actions');
-  gsap.set(heroTitleLines, { yPercent: 70, filter: 'blur(14px)' });
+  gsap.set($$('.hero-title .li'), { yPercent: 105 });
   gsap.set(heroActions, { y: 30, autoAlpha: 0 });
   const dash = p => { const L = p.getTotalLength(); gsap.set(p, { strokeDasharray: L, strokeDashoffset: L }); return L; };
   const wake = $('[data-wake]'); dash(wake);
@@ -232,9 +237,9 @@
   // visible from the first paint (it is the LCP): it only comes into focus, never hides behind a clip
   gsap.set(mark, { filter: 'blur(16px)', scale: 1.06 });
   gsap.set(word, { clipPath: 'inset(0 50% 0 50%)', letterSpacing: '0' });
-  lenis && lenis.stop();
 
-  const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' }, onComplete: () => { intro.remove(); lenis && lenis.start(); ScrollTrigger.refresh(); } });
+  root.classList.add('opening');
+  const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' }, onComplete: () => { intro.remove(); document.documentElement.classList.remove('opening'); ScrollTrigger.refresh(); } });
   tl.to(wake, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' })
     .to(swoosh, { strokeDashoffset: 0, duration: .9 }, .45)
     .to(arcs, { strokeDashoffset: 0, duration: .9, stagger: .08 }, .6)
@@ -263,7 +268,7 @@
 
   // hero leaves as a frame
   gsap.timeline({ scrollTrigger: { trigger: '[data-hero]', start: 'top top', end: 'bottom top', scrub: true } })
-    .to('[data-hero-frame]', { clipPath: 'inset(9% 6% 9% 6% round 28px)', ease: 'none' }, 0)
+    .to('[data-hero-frame]', { scale: .88, borderRadius: 28, ease: 'none' }, 0)
     .to('.hero-copy', { yPercent: -60, ease: 'none' }, 0);
   ScrollTrigger.create({ trigger: '[data-hero]', start: 'bottom top', onEnter: () => heroVideo.pause(), onLeaveBack: playHero });
 
@@ -273,25 +278,25 @@
   const words = $$('.w', mt);
   ScrollTrigger.create({
     trigger: mt, start: 'top 80%', end: 'bottom 45%', scrub: true,
-    onUpdate: s => { const n = Math.round(s.progress * words.length); words.forEach((w, i) => w.classList.toggle('on', i < n)); }
+    onUpdate: s => { const n = Math.round(s.progress * words.length); if (n === words.lit) return; words.lit = n; words.forEach((w, i) => w.classList.toggle('on', i < n)); }
   });
 
   // window: dive into the first stroke of the H until the sea fills the screen
-  const maskSpan = $('[data-window-mask] span');
+  const maskEl = $('[data-window-mask]'), wordEl = $('[data-window-word]');
   const originOnStem = () => {
-    const r = document.createRange();
-    r.setStart(maskSpan.firstChild, 0); r.setEnd(maskSpan.firstChild, 1);
-    const h = r.getBoundingClientRect(), s = maskSpan.getBoundingClientRect();
-    if (!s.width) return;
-    const x = (h.left - s.left) + h.width * .2, y = (h.top - s.top) + h.height * .55;
-    maskSpan.style.transformOrigin = `${x}px ${y}px`;
+    // the dive goes into the first stroke of the H: find it on screen and scale the whole cut-out layer from there
+    try {
+      const ext = wordEl.getExtentOfChar(0), m = wordEl.getScreenCTM(), box = maskEl.getBoundingClientRect();
+      const x = m.a * (ext.x + ext.width * .2) + m.e - box.left, y = m.d * (ext.y + ext.height * .58) + m.f - box.top;
+      maskEl.style.transformOrigin = `${x}px ${y}px`;
+    } catch (e) {}
   };
   document.fonts ? document.fonts.ready.then(originOnStem) : originOnStem();
   addEventListener('resize', originOnStem);
   gsap.timeline({ scrollTrigger: { trigger: '[data-window]', start: 'top top', end: 'bottom bottom', scrub: true, onRefresh: originOnStem } })
-    .fromTo(maskSpan, { scale: 1 }, { scale: 60, ease: 'power3.in', duration: 1 })
+    .fromTo(maskEl, { scale: 1 }, { scale: 60, ease: 'power3.in', duration: 1 })
     .to('[data-window-mask]', { opacity: 0, duration: .1 }, .92)
-    .fromTo('[data-window-line]', { opacity: 0, y: 40, filter: 'blur(12px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .35 }, 1.0)
+    .fromTo('[data-window-line]', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .35 }, 1.0)
     .to({}, { duration: .3 });
 
   // configurator: the scroll turns the yacht a full circle, then wipes through four configured looks

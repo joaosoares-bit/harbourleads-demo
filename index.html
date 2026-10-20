@@ -252,7 +252,15 @@
   <section class="window" data-window aria-label="Harbour">
     <div class="window-stick">
       <video class="window-video" data-lazy-video data-src="media/video/hero-720.mp4" data-src-big="media/video/hero-1080.mp4" muted playsinline loop preload="none" aria-hidden="true"></video>
-      <div class="window-mask" data-window-mask aria-hidden="true"><span>HARBOUR</span></div>
+      <div class="window-mask" data-window-mask aria-hidden="true">
+        <svg class="window-svg" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet">
+          <defs><mask id="wm" maskUnits="userSpaceOnUse" x="-1500" y="-1200" width="4000" height="2800">
+            <rect x="-1500" y="-1200" width="4000" height="2800" fill="#fff"/>
+            <text data-window-word x="500" y="252" text-anchor="middle" fill="#000">HARBOUR</text>
+          </mask></defs>
+          <rect x="-1500" y="-1200" width="4000" height="2800" fill="#0A1730" mask="url(#wm)"/>
+        </svg>
+      </div>
       <p class="window-line" data-window-line>From look<br><em>to deal.</em></p>
     </div>
   </section>
@@ -339,7 +347,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="js/site.js"></script>
 </body>
 </html>
