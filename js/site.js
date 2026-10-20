@@ -145,13 +145,15 @@
 
   // hero video: start on first gesture or 1.2 s after load, pause when away
   const heroVideo = $('[data-hero-video]');
-  const playHero = () => { const p = heroVideo.play(); p && p.catch(() => {}); };
+  const loadHero = () => { if (!heroVideo.src && heroVideo.dataset.src) heroVideo.src = heroVideo.dataset.src; };
+  if (document.readyState === 'complete') loadHero(); else addEventListener('load', loadHero);
+  const playHero = () => { loadHero(); const p = heroVideo.play(); p && p.catch(() => {}); };
   if (!calm) {
     let started = false;
     const go = () => { if (started) return; started = true; playHero(); };
     ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(ev => addEventListener(ev, go, { once: true, passive: true }));
     addEventListener('load', () => setTimeout(go, 400));
-    go();
+    if (document.readyState === 'complete') go();
   }
   document.addEventListener('visibilitychange', () => { if (document.hidden) heroVideo.pause(); else if (!calm) playHero(); });
 

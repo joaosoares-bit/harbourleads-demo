@@ -94,7 +94,7 @@
           var vertical = h > w * 1.1;
           var src = vertical ? 'hero-v.mp4' : px >= 2600 ? 'hero-2160.mp4' : px >= 1500 ? 'hero-1080.mp4' : 'hero-720.mp4';
           v.poster = 'media/img/' + (vertical ? 'poster-v.webp' : (px >= 1400 ? 'poster-1920.webp' : 'poster-960.webp'));
-          v.src = 'media/video/' + src;
+          v.dataset.src = 'media/video/' + src; // fetched after load: the brand opening covers the hero meanwhile
         })();
       </script>
       <div class="hero-shade" aria-hidden="true"></div>
